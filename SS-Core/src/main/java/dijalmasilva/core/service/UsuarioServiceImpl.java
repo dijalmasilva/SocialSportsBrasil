@@ -11,8 +11,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import dijalmasilva.core.repository.UsuarioRepository;
 import dijalmasilva.entidades.Grupo;
+import dijalmasilva.entidades.Log;
 import dijalmasilva.entidades.Visita;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Objects;
 
 @Named
 public class UsuarioServiceImpl implements UsuarioService {
@@ -21,6 +25,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository dao;
     @Inject
     private VisitaService visitaService;
+    @Inject
+    private LogService logService;
 
     @Override
     public Usuario login(String emailOuUsername, String password) {
@@ -51,6 +57,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario salvarUsuario(Usuario u) {
+        Log l = new Log("Cadastro de usuário", u.getNome(), new Date());
+        logService.salvar(l);
         return dao.save(u);
     }
 
@@ -95,7 +103,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         List<Usuario> usuarios = dao.findByEmailContaining(email);
         return usuarios;
     }
-    
+
     @Override
     public List<Usuario> listarTodos() {
         return (List<Usuario>) dao.findAll();
@@ -165,7 +173,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario seguirGrupo(Usuario u, Grupo grupo) {
         u.addGrupo(grupo);
-        
+
         return dao.save(u);
     }
 
@@ -178,13 +186,23 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> visitaramSeuPerfil(Long id) {
         List<Visita> visitas = visitaService.visitasDeHoje(id);
         List<Usuario> usuarios = new ArrayList<>();
-        System.out.println("---------Chamou o visitou perfil -------");
+
         for (Visita visita : visitas) {
-            System.out.println("Visitado: " + visita.getVisitado() + " \nVisitante: "+visita.getVisitante());
-            usuarios.add(dao.findOne(visita.getVisitante()));
-            System.out.println("------------------------------------");
+            if (!isExistInVisit(visita.getVisitante(), usuarios)) {
+                usuarios.add(dao.findOne(visita.getVisitante()));
+            }
         }
-        
+
         return usuarios;
+    }
+
+    private boolean isExistInVisit(Long id, List<Usuario> usuarios) {
+        for (Usuario u : usuarios) {
+            if (Objects.equals(u.getId(), id)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

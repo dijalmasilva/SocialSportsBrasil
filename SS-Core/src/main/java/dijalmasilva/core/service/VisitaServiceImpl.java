@@ -20,7 +20,7 @@ public class VisitaServiceImpl implements VisitaService {
 
     @Override
     public List<Visita> visitasDeHoje(Long id) {
-        return dao.findByVisitadoAndData(id, LocalDate.now());
+        return dao.findDistinctByVisitadoAndData(id, LocalDate.now());
     }
 
     @Override

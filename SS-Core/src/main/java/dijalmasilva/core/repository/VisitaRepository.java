@@ -18,5 +18,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VisitaRepository extends MongoRepository<Visita, Long>{
     
-    public List<Visita> findByVisitadoAndData(Long visitado, LocalDate data);
+    public List<Visita> findDistinctByVisitadoAndData(Long visitado, LocalDate data);
 }

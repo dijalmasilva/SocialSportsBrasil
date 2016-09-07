@@ -14,11 +14,16 @@
         <aside class="conteudo">
             <c:if test="${visitantes.isEmpty() == false}">
                 <h3>Visitaram seu perfil hoje</h3>
-                <c:forEach items="${visitantes}" var="visit">
-                    <div class="card">
-                        <h4>${visit.nome}</h4>
-                    </div>
-                </c:forEach>
+                <div class="row">
+                    <c:forEach items="${visitantes}" var="visit">
+                        <div class="col-lg-2 col-sm-2 col-xs-2">
+                            <a>
+                                <img src="/user/image/${visit.id}" alt="${visit.nome}" class="img-thumbnail imgPerfil" align="up"/>
+                                ${visit.nome}
+                            </a>
+                        </div>
+                    </c:forEach>
+                </div>
             </c:if>
             <c:if test="${visitantes.isEmpty() == true}">
                 <h3>Ninguém visualizou seu perfil hoje.</h3>
