@@ -6,6 +6,7 @@
 package dijalmasilva.controllers;
 
 import dijalmasilva.core.service.UsuarioService;
+import dijalmasilva.core.service.VisitaService;
 import dijalmasilva.entidades.Usuario;
 import dijalmasilva.form.UsuarioForm;
 import java.io.IOException;
@@ -32,6 +33,8 @@ public class ControladorUser {
 
     @Inject
     private UsuarioService serviceUser;
+    @Inject
+    private VisitaService serviceVisita;
 
     @RequestMapping("/home")
     public String home() {
@@ -41,7 +44,9 @@ public class ControladorUser {
     @RequestMapping("/otherUser/{id}")
     public String otherUser(@PathVariable Long id, HttpServletRequest req) {
         Usuario outroUsuario = serviceUser.findById(id);
+        Usuario user = (Usuario) req.getSession().getAttribute("user");
         req.setAttribute("outroUsuario", outroUsuario);
+        serviceVisita.visitou(user.getId(), id);
         return "otherUser";
     }
 
@@ -60,6 +65,7 @@ public class ControladorUser {
             return "index";
         } else {
             req.getSession().setAttribute("user", user);
+            req.setAttribute("visitantes", serviceUser.visitaramSeuPerfil(user.getId()));
             req.setAttribute("result", "Bem vindo!");
         }
         return "home";

@@ -11,12 +11,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import dijalmasilva.core.repository.UsuarioRepository;
 import dijalmasilva.entidades.Grupo;
+import dijalmasilva.entidades.Visita;
+import java.util.ArrayList;
 
 @Named
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Inject
     private UsuarioRepository dao;
+    @Inject
+    private VisitaService visitaService;
 
     @Override
     public Usuario login(String emailOuUsername, String password) {
@@ -168,5 +172,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario deixarDeSeguirGrupo(Usuario u, Grupo g) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Usuario> visitaramSeuPerfil(Long id) {
+        List<Visita> visitas = visitaService.visitasDeHoje(id);
+        List<Usuario> usuarios = new ArrayList<>();
+        
+        for (Visita visita : visitas) {
+            usuarios.add(dao.findOne(visita.getVisitante()));
+        }
+        
+        return usuarios;
     }
 }

@@ -12,7 +12,14 @@
         <%@include file="header.jsp" %>
         <%@include file="asideUser.jsp" %>
         <aside class="conteudo">
-            <h3>Feed</h3>
+            <c:if test="${visitantes.isEmpty() == false}">
+                <h3>Visitaram seu perfil hoje</h3>
+                <c:forEach items="${visitantes}" var="visit">
+                    <div class="card">
+                        <h4>${visit.nome}</h4>
+                    </div>
+                </c:forEach>
+            </c:if>
         </aside>
         <c:if test="${result != null}">
             <%@include file="notification.jsp" %>
