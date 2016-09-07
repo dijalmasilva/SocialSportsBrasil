@@ -20,6 +20,9 @@
                     </div>
                 </c:forEach>
             </c:if>
+            <c:if test="${visitantes.isEmpty() == true}">
+                <h3>Ninguém visualizou seu perfil hoje.</h3>
+            </c:if>
         </aside>
         <c:if test="${result != null}">
             <%@include file="notification.jsp" %>

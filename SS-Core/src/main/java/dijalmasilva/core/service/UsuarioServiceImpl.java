@@ -132,12 +132,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         List<Usuario> usuariosEncontradosPorNome;
         List<Usuario> usuariosEncontradosSobrenome;
         if (nomes != null && nomes.length > 1) {
-            usuariosEncontradosPorNome = dao.findByNomeContainingAndIdNotAndContaNotLike(nomes[0], id, "Desativada");
-            usuariosEncontradosSobrenome = dao.findBySobrenomeContainingAndIdNotAndContaNotLike(nomes[1], id, "Desativada");
+            usuariosEncontradosPorNome = dao.findByNomeContainingAndIdNotAndContaNotLikeIgnoreCase(nomes[0], id, "Desativada");
+            usuariosEncontradosSobrenome = dao.findBySobrenomeContainingAndIdNotAndContaNotLikeIgnoreCase(nomes[1], id, "Desativada");
 
         } else {
-            usuariosEncontradosPorNome = dao.findByNomeContainingAndIdNotAndContaNotLike(nome, id, "Desativada");
-            usuariosEncontradosSobrenome = dao.findBySobrenomeContainingAndIdNotAndContaNotLike(nome, id, "Desativada");
+            usuariosEncontradosPorNome = dao.findByNomeContainingAndIdNotAndContaNotLikeIgnoreCase(nome, id, "Desativada");
+            usuariosEncontradosSobrenome = dao.findBySobrenomeContainingAndIdNotAndContaNotLikeIgnoreCase(nome, id, "Desativada");
         }
 
         usuariosEncontrados = usuariosEncontradosPorNome;
@@ -178,9 +178,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> visitaramSeuPerfil(Long id) {
         List<Visita> visitas = visitaService.visitasDeHoje(id);
         List<Usuario> usuarios = new ArrayList<>();
-        
+        System.out.println("---------Chamou o visitou perfil -------");
         for (Visita visita : visitas) {
+            System.out.println("Visitado: " + visita.getVisitado() + " \nVisitante: "+visita.getVisitante());
             usuarios.add(dao.findOne(visita.getVisitante()));
+            System.out.println("------------------------------------");
         }
         
         return usuarios;

@@ -7,25 +7,25 @@ package dijalmasilva.core.service;
 
 import dijalmasilva.core.repository.VisitaRepository;
 import dijalmasilva.entidades.Visita;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
-import javax.inject.Inject;
 import javax.inject.Named;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Named
 public class VisitaServiceImpl implements VisitaService {
 
-    @Inject
+    @Autowired
     private VisitaRepository dao;
 
     @Override
     public List<Visita> visitasDeHoje(Long id) {
-        return dao.findByIdAndVisitado(new Date(), id);
+        return dao.findByVisitadoAndData(id, LocalDate.now());
     }
 
     @Override
     public void visitou(Long visitante, Long visitado) {
-        Visita v = new Visita(visitante, visitado);
+        Visita v = new Visita(visitante, visitado, LocalDate.now());
         dao.save(v);
     }
 

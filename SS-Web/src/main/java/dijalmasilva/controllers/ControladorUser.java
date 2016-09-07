@@ -64,8 +64,12 @@ public class ControladorUser {
             req.setAttribute("result", "Nome de usuário ou senha inválidos.");
             return "index";
         } else {
+            List<Usuario> visitaramSeuPerfil = serviceUser.visitaramSeuPerfil(user.getId());
+            for (Usuario usuario : visitaramSeuPerfil) {
+                System.out.println(usuario.getNome());
+            }
             req.getSession().setAttribute("user", user);
-            req.setAttribute("visitantes", serviceUser.visitaramSeuPerfil(user.getId()));
+            req.setAttribute("visitantes", visitaramSeuPerfil);
             req.setAttribute("result", "Bem vindo!");
         }
         return "home";

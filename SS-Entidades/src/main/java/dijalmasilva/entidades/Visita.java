@@ -5,7 +5,7 @@
  */
 package dijalmasilva.entidades;
 
-import java.util.Date;
+import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
 
 /**
@@ -15,27 +15,36 @@ import org.springframework.data.annotation.Id;
 public class Visita {
 
     @Id
-    private Date id;
+    private String id;
 
     private Long visitante;
     private Long visitado;
+    private LocalDate data;
 
     public Visita() {
-        this.id = new Date();
+
     }
 
-    public Visita(Long visitante, Long visitado) {
-        this.id = new Date();
+    public Visita(Long visitante, Long visitado, LocalDate data) {
         this.visitante = visitante;
         this.visitado = visitado;
+        this.data = data;
     }
 
-    public Date getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Date id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
     public Long getVisitante() {

@@ -6,15 +6,17 @@
 package dijalmasilva.core.repository;
 
 import dijalmasilva.entidades.Visita;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Dijalma Silva <dijalmacz@gmail.com>
  */
-public interface VisitaRepository extends MongoRepository<Visita, Date>{
+@Repository
+public interface VisitaRepository extends MongoRepository<Visita, Long>{
     
-    public List<Visita> findByIdAndVisitado(Date day, Long id);
+    public List<Visita> findByVisitadoAndData(Long visitado, LocalDate data);
 }
