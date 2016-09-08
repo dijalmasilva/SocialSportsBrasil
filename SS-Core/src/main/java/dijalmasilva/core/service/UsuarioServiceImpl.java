@@ -11,11 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import dijalmasilva.core.repository.UsuarioRepository;
 import dijalmasilva.entidades.Grupo;
-import dijalmasilva.entidades.Log;
 import dijalmasilva.entidades.Visita;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
 @Named
@@ -25,8 +22,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository dao;
     @Inject
     private VisitaService visitaService;
-    @Inject
-    private LogService logService;
+//    @Inject
+//    private LogService logService;
 
     @Override
     public Usuario login(String emailOuUsername, String password) {
@@ -57,8 +54,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario salvarUsuario(Usuario u) {
-        Log l = new Log("Cadastro de usuário", u.getNome(), new Date());
-        logService.salvar(l);
+//        Log l = new Log(UUID.randomUUID().toString(), "Cadastro de usuário", u.getNome(), LocalDate.now());
+//        logService.salvar(l);
         return dao.save(u);
     }
 

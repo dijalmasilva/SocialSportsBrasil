@@ -5,7 +5,6 @@
  */
 package dijalmasilva.core.service;
 
-import dijalmasilva.core.repository.LogRepository;
 import dijalmasilva.entidades.Log;
 import java.util.List;
 import javax.inject.Named;
@@ -13,16 +12,27 @@ import javax.inject.Named;
 @Named
 public class LogServiceImpl implements LogService {
 
-    private LogRepository dao = new LogRepository();
-    
     @Override
-    public void salvar(Log l) {
-        dao.salvar(l);
+    public void salvar(Log log) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Log> todos() {
-        return dao.buscarTodos();
+    public List<Log> buscarTodos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+//    @Inject
+//    private LogRepository dao;
+//
+//    @Override
+//    public void salvar(Log log) {
+//        dao.save(log);
+//    }
+//
+//    @Override
+//    public List<Log> buscarTodos() {
+//        return (List<Log>) dao.findAll();
+//    }
+
 }

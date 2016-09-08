@@ -8,10 +8,7 @@ package dijalmasilva.core.service;
 import dijalmasilva.core.repository.GrupoRepository;
 import dijalmasilva.core.repository.UsuarioRepository;
 import dijalmasilva.entidades.Grupo;
-import dijalmasilva.entidades.Log;
 import dijalmasilva.entidades.Usuario;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,13 +20,10 @@ public class GrupoServiceImpl implements GrupoService {
     private GrupoRepository dao;
     @Inject 
     private UsuarioRepository daoUsuario;
-    @Inject
-    private LogService logService;
+    
     
     @Override
     public Grupo salvar(Usuario u, Grupo g) {
-        Log l = new Log("Cadastro de grupo", g.getNome(), new Date());
-        logService.salvar(l);
         g.setDono(u);
         Grupo grupo = dao.save(g);
         u.addGrupo(grupo);

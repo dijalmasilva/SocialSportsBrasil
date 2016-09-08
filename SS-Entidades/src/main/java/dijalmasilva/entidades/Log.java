@@ -5,39 +5,52 @@
  */
 package dijalmasilva.entidades;
 
-import com.datastax.driver.core.LocalDate;
+import com.couchbase.client.java.repository.annotation.Field;
+import com.couchbase.client.java.repository.annotation.Id;
 import java.util.Date;
-import org.springframework.data.cassandra.mapping.PrimaryKey;
-import org.springframework.data.cassandra.mapping.Table;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.couchbase.core.mapping.Document;
 
 /**
  *
  * @author Dijalma Silva <dijalmacz@gmail.com>
  */
-@Table
+@Document
 public class Log {
 
-    @PrimaryKey
-    private Long id;
+    @Id
+    private String id;
 
+    @Field
     private String event;
-    private String nome;
+
+    @Field
+    private String name;
+
+    @CreatedDate
     private Date data;
 
     public Log() {
     }
 
-    public Log(String event, String nome, Date data) {
+    public Log(String event, String name, Date data) {
         this.event = event;
-        this.nome = nome;
+        this.name = name;
         this.data = data;
     }
 
-    public Long getId() {
+    public Log(String id, String event, String name, Date data) {
+        this.id = id;
+        this.event = event;
+        this.name = name;
+        this.data = data;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,12 +62,12 @@ public class Log {
         this.event = event;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getData() {
